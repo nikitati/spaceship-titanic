@@ -1,0 +1,22 @@
+artifacts:
+  data:
+    hash: 948e6e08cafddae7265534253a36e4aa
+    size: 57747
+    type: dvc
+    uri: submission.csv
+object_type: data
+reader:
+  data_type:
+    columns:
+    - PassengerId
+    - Transported
+    dtypes:
+    - object
+    - bool
+    index_cols: []
+    type: dataframe
+  format: csv
+  type: pandas
+requirements:
+- module: pandas
+  version: 1.5.2

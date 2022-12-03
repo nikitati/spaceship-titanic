@@ -1,0 +1,9 @@
+dvc[s3]==2.35.2
+click==8.1.3
+numpy==1.23.5
+pandas==1.5.2
+matplotlib==3.6.2
+seaborn==0.12.1
+scikit-learn==1.1.3
+jupyterlab==3.5.0
+mlem==0.3.1

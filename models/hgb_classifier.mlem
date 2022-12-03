@@ -1,0 +1,112 @@
+artifacts:
+  data:
+    hash: 0404e2d2d149553ed8e01d0b8ee0b0e6
+    size: 369024
+    type: dvc
+    uri: hgb_classifier
+model_type:
+  methods:
+    predict:
+      args:
+      - name: X
+        type_:
+          columns:
+          - PassengerId
+          - HomePlanet
+          - Destination
+          - CabinDeck
+          - CabinSide
+          - RoomService
+          - FoodCourt
+          - ShoppingMall
+          - Spa
+          - VRDeck
+          - TotalExpenses
+          - CabinNum
+          - Age
+          - CryoSleep
+          - VIP
+          - NoBill
+          dtypes:
+          - object
+          - object
+          - object
+          - object
+          - object
+          - float64
+          - float64
+          - float64
+          - float64
+          - float64
+          - float64
+          - float64
+          - float64
+          - object
+          - object
+          - bool
+          index_cols: []
+          type: dataframe
+      name: predict
+      returns:
+        dtype: bool
+        shape:
+        - null
+        type: ndarray
+      varkw: predict_params
+    predict_proba:
+      args:
+      - name: X
+        type_:
+          columns:
+          - PassengerId
+          - HomePlanet
+          - Destination
+          - CabinDeck
+          - CabinSide
+          - RoomService
+          - FoodCourt
+          - ShoppingMall
+          - Spa
+          - VRDeck
+          - TotalExpenses
+          - CabinNum
+          - Age
+          - CryoSleep
+          - VIP
+          - NoBill
+          dtypes:
+          - object
+          - object
+          - object
+          - object
+          - object
+          - float64
+          - float64
+          - float64
+          - float64
+          - float64
+          - float64
+          - float64
+          - float64
+          - object
+          - object
+          - bool
+          index_cols: []
+          type: dataframe
+      name: predict_proba
+      returns:
+        dtype: float64
+        shape:
+        - null
+        - 2
+        type: ndarray
+      varkw: predict_proba_params
+  type: sklearn_pipeline
+object_type: model
+requirements:
+- module: numpy
+  version: 1.23.5
+- module: pandas
+  version: 1.5.2
+- module: sklearn
+  version: 1.1.3

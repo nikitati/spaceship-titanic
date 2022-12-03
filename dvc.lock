@@ -1,0 +1,131 @@
+schema: '2.0'
+stages:
+  split-data:
+    cmd: python src/split_data.py
+    deps:
+    - path: data/raw/train.csv
+      md5: 8cf8d6d39aecf7cc6466eb79b0ed6e1b
+      size: 805421
+    - path: src/split_data.py
+      md5: 48c61bf4e927a6251c16289228560d54
+      size: 938
+    outs:
+    - path: data/datasets/train.csv
+      md5: 384dce5c4b08532745e343cca6c5c851
+      size: 605020
+    - path: data/datasets/val.csv
+      md5: 22326675599eb80cd0f6c3f58194d946
+      size: 200523
+  compute-train-features:
+    cmd: python src/compute_features.py --input-file data/datasets/train.csv --output-file
+      data/features/train.csv
+    deps:
+    - path: data/datasets/train.csv
+      md5: 384dce5c4b08532745e343cca6c5c851
+      size: 605020
+    - path: src/compute_features.py
+      md5: a6478b2bbad368467d82374936a53f9f
+      size: 1377
+    outs:
+    - path: data/features/train.csv
+      md5: e7c76568d8d1592d8c25ea00bab06304
+      size: 785154
+  train:
+    cmd: python src/train_model.py --training-data data/features/train.csv --model-path
+      models/hgb_classifier
+    deps:
+    - path: data/features/train.csv
+      md5: e7c76568d8d1592d8c25ea00bab06304
+      size: 785154
+    - path: src/train_model.py
+      md5: 0f43b6a1e67f70230f6567671f9aff0d
+      size: 2855
+    outs:
+    - path: models/hgb_classifier
+      md5: 0404e2d2d149553ed8e01d0b8ee0b0e6
+      size: 369024
+    - path: models/hgb_classifier.mlem
+      md5: f802d52cc2e5f52958383c3698914cb6
+      size: 2194
+    - path: models/hgb_classifier_lambda
+      md5: a5527b5f93f5122ba7c0b23f01286203
+      size: 371217
+    - path: models/hgb_classifier_lambda.mlem
+      md5: 2766982836126e5107fd95c6f32890c1
+      size: 2883
+  compute-val-features:
+    cmd: python src/compute_features.py --input-file data/datasets/val.csv --output-file
+      data/features/val.csv
+    deps:
+    - path: data/datasets/val.csv
+      md5: 22326675599eb80cd0f6c3f58194d946
+      size: 200523
+    - path: src/compute_features.py
+      md5: a6478b2bbad368467d82374936a53f9f
+      size: 1377
+    outs:
+    - path: data/features/val.csv
+      md5: cbc56e1bf89bcbd823ca368d5df20ca3
+      size: 260403
+  evaluate:
+    cmd: mkdir -p metrics; python src/evaluate_model.py --test-data data/features/val.csv
+      --model-path models/hgb_classifier > metrics/test.json
+    deps:
+    - path: data/features/val.csv
+      md5: cbc56e1bf89bcbd823ca368d5df20ca3
+      size: 260403
+    - path: models/hgb_classifier
+      md5: 0404e2d2d149553ed8e01d0b8ee0b0e6
+      size: 369024
+    - path: src/evaluate_model.py
+      md5: 38db6902b6175bd5e76f6bfa84225304
+      size: 1020
+    outs:
+    - path: metrics/test.json
+      md5: d60084d563a9f4b23a8b1621c843be4a
+      size: 171
+  render-EDA:
+    cmd: jupyter nbconvert --to html --execute notebooks/1.0-eda.ipynb --output-dir
+      reports/
+    deps:
+    - path: data/raw/train.csv
+      md5: 8cf8d6d39aecf7cc6466eb79b0ed6e1b
+      size: 805421
+    - path: notebooks/1.0-eda.ipynb
+      md5: 49395fb93c957c4987a2176080f5669c
+      size: 3493
+    outs:
+    - path: reports/1.0-eda.html
+      md5: a4db0634187e11756892fb699ba8f675
+      size: 883750
+  compute-test-features:
+    cmd: python src/compute_features.py --input-file data/raw/test.csv --output-file
+      data/features/test.csv
+    deps:
+    - path: data/raw/test.csv
+      md5: 5ded803886f27a2f241763327b14a19e
+      size: 372487
+    - path: src/compute_features.py
+      md5: a6478b2bbad368467d82374936a53f9f
+      size: 1377
+    outs:
+    - path: data/features/test.csv
+      md5: 8c46ac0db01d09b1be0ece394e3127f5
+      size: 490518
+  create_submission:
+    cmd: mlem apply models/hgb_classifier_lambda data/features/test.csv --method __call__
+      --import --it "pandas[csv]" --output data/predictions/submission.csv
+    deps:
+    - path: data/features/test.csv
+      md5: 8c46ac0db01d09b1be0ece394e3127f5
+      size: 490518
+    - path: models/hgb_classifier_lambda
+      md5: a5527b5f93f5122ba7c0b23f01286203
+      size: 371217
+    outs:
+    - path: data/predictions/submission.csv
+      md5: 948e6e08cafddae7265534253a36e4aa
+      size: 57747
+    - path: data/predictions/submission.csv.mlem
+      md5: be14d91cbe4023d08377efa9ae255ae7
+      size: 356

@@ -1,0 +1,74 @@
+stages:
+  split-data:
+    cmd: python src/split_data.py
+    deps:
+    - data/raw/train.csv
+    - src/split_data.py
+    outs:
+    - data/datasets/train.csv
+    - data/datasets/val.csv
+  compute-train-features:
+    cmd: python src/compute_features.py --input-file data/datasets/train.csv --output-file
+      data/features/train.csv
+    deps:
+    - data/datasets/train.csv
+    - src/compute_features.py
+    outs:
+    - data/features/train.csv
+  compute-val-features:
+    cmd: python src/compute_features.py --input-file data/datasets/val.csv --output-file
+      data/features/val.csv
+    deps:
+    - data/datasets/val.csv
+    - src/compute_features.py
+    outs:
+    - data/features/val.csv
+  compute-test-features:
+    cmd: python src/compute_features.py --input-file data/raw/test.csv --output-file
+      data/features/test.csv
+    deps:
+    - data/raw/test.csv
+    - src/compute_features.py
+    outs:
+    - data/features/test.csv
+  train:
+    cmd: python src/train_model.py --training-data data/features/train.csv --model-path
+      models/hgb_classifier
+    deps:
+    - data/features/train.csv
+    - src/train_model.py
+    outs:
+    - models/hgb_classifier
+    - models/hgb_classifier.mlem:
+        cache: false
+    - models/hgb_classifier_lambda
+    - models/hgb_classifier_lambda.mlem:
+        cache: false
+
+  evaluate:
+    cmd: mkdir -p metrics; python src/evaluate_model.py --test-data data/features/val.csv
+      --model-path models/hgb_classifier > metrics/test.json
+    deps:
+    - data/features/val.csv
+    - models/hgb_classifier
+    - src/evaluate_model.py
+    metrics:
+    - metrics/test.json:
+        cache: false
+  create_submission:
+    cmd: mlem apply models/hgb_classifier_lambda data/features/test.csv --method __call__ --import --it "pandas[csv]" --output data/predictions/submission.csv
+    deps:
+      - models/hgb_classifier_lambda
+      - data/features/test.csv
+    outs:
+      - data/predictions/submission.csv
+      - data/predictions/submission.csv.mlem:
+          cache: false
+  render-EDA:
+    cmd: jupyter nbconvert --to html --execute notebooks/1.0-eda.ipynb --output-dir
+      reports/
+    deps:
+    - data/raw/train.csv
+    - notebooks/1.0-eda.ipynb
+    outs:
+    - reports/1.0-eda.html
