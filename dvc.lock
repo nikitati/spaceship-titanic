@@ -156,3 +156,10 @@ stages:
     - path: data/predictions/submission.csv.mlem
       md5: be14d91cbe4023d08377efa9ae255ae7
       size: 356
+  submit-to-kaggle:
+    cmd: kaggle competitions submit -c spaceship-titanic -f data/predictions/submission.csv
+      -m "$(git rev-parse --short HEAD)"
+    deps:
+    - path: data/predictions/submission.csv
+      md5: 948e6e08cafddae7265534253a36e4aa
+      size: 57747
