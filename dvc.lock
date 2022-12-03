@@ -42,16 +42,16 @@ stages:
       size: 2855
     outs:
     - path: models/hgb_classifier
-      md5: 0404e2d2d149553ed8e01d0b8ee0b0e6
+      md5: f87798ec6edfb9dea47c285a2a7bc420
       size: 369024
     - path: models/hgb_classifier.mlem
-      md5: f802d52cc2e5f52958383c3698914cb6
+      md5: 10a00bd9cc7fb98daa205200f240b876
       size: 2194
     - path: models/hgb_classifier_lambda
-      md5: a5527b5f93f5122ba7c0b23f01286203
-      size: 371217
+      md5: 6c20682c2607d683c509ff63e5b97be3
+      size: 371219
     - path: models/hgb_classifier_lambda.mlem
-      md5: 2766982836126e5107fd95c6f32890c1
+      md5: 9e6ab617263127b00e22cc75331f4ce4
       size: 2883
   compute-val-features:
     cmd: python src/compute_features.py --input-file data/datasets/val.csv --output-file
@@ -75,7 +75,7 @@ stages:
       md5: cbc56e1bf89bcbd823ca368d5df20ca3
       size: 260403
     - path: models/hgb_classifier
-      md5: 0404e2d2d149553ed8e01d0b8ee0b0e6
+      md5: f87798ec6edfb9dea47c285a2a7bc420
       size: 369024
     - path: src/evaluate_model.py
       md5: 38db6902b6175bd5e76f6bfa84225304
@@ -96,8 +96,8 @@ stages:
       size: 3493
     outs:
     - path: reports/1.0-eda.html
-      md5: a4db0634187e11756892fb699ba8f675
-      size: 883750
+      md5: ea79c7cd80bb8b9bd8d11b1b81a048d4
+      size: 883752
   compute-test-features:
     cmd: python src/compute_features.py --input-file data/raw/test.csv --output-file
       data/features/test.csv
@@ -120,8 +120,8 @@ stages:
       md5: 8c46ac0db01d09b1be0ece394e3127f5
       size: 490518
     - path: models/hgb_classifier_lambda
-      md5: a5527b5f93f5122ba7c0b23f01286203
-      size: 371217
+      md5: 6c20682c2607d683c509ff63e5b97be3
+      size: 371219
     outs:
     - path: data/predictions/submission.csv
       md5: 948e6e08cafddae7265534253a36e4aa

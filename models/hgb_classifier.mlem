@@ -1,6 +1,6 @@
 artifacts:
   data:
-    hash: 0404e2d2d149553ed8e01d0b8ee0b0e6
+    hash: f87798ec6edfb9dea47c285a2a7bc420
     size: 369024
     type: dvc
     uri: hgb_classifier
