@@ -139,3 +139,20 @@ stages:
     - path: train.csv
       md5: 8cf8d6d39aecf7cc6466eb79b0ed6e1b
       size: 805421
+  create-submission:
+    cmd: mlem apply models/hgb_classifier_lambda data/features/test.csv --method __call__
+      --import --it "pandas[csv]" --output data/predictions/submission.csv
+    deps:
+    - path: data/features/test.csv
+      md5: 8c46ac0db01d09b1be0ece394e3127f5
+      size: 490518
+    - path: models/hgb_classifier_lambda
+      md5: 6c20682c2607d683c509ff63e5b97be3
+      size: 371219
+    outs:
+    - path: data/predictions/submission.csv
+      md5: 948e6e08cafddae7265534253a36e4aa
+      size: 57747
+    - path: data/predictions/submission.csv.mlem
+      md5: be14d91cbe4023d08377efa9ae255ae7
+      size: 356
