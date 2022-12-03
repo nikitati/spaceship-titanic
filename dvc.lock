@@ -129,3 +129,13 @@ stages:
     - path: data/predictions/submission.csv.mlem
       md5: be14d91cbe4023d08377efa9ae255ae7
       size: 356
+  fetch-data:
+    cmd: kaggle competitions download -c spaceship-titanic; unzip spaceship-titanic.zip;
+      rm spaceship-titanic.zip sample_submission.csv;
+    outs:
+    - path: test.csv
+      md5: 5ded803886f27a2f241763327b14a19e
+      size: 372487
+    - path: train.csv
+      md5: 8cf8d6d39aecf7cc6466eb79b0ed6e1b
+      size: 805421

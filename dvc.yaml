@@ -1,80 +1,90 @@
 stages:
+  fetch-data:
+    cmd: >-
+      kaggle competitions download -c spaceship-titanic;
+      unzip spaceship-titanic.zip;
+      rm spaceship-titanic.zip sample_submission.csv;
+    wdir: data/raw
+    outs:
+    - test.csv
+    - train.csv
+    frozen: true
   split-data:
     cmd: python src/split_data.py
     deps:
-      - data/raw/train.csv
-      - src/split_data.py
+    - data/raw/train.csv
+    - src/split_data.py
     outs:
-      - data/datasets/train.csv
-      - data/datasets/val.csv
+    - data/datasets/train.csv
+    - data/datasets/val.csv
   compute-train-features:
-    cmd:
-      python src/compute_features.py --input-file data/datasets/train.csv --output-file
+    cmd: python src/compute_features.py --input-file data/datasets/train.csv --output-file
       data/features/train.csv
     deps:
-      - data/datasets/train.csv
-      - src/compute_features.py
+    - data/datasets/train.csv
+    - src/compute_features.py
     outs:
-      - data/features/train.csv
+    - data/features/train.csv
   compute-val-features:
-    cmd:
-      python src/compute_features.py --input-file data/datasets/val.csv --output-file
+    cmd: python src/compute_features.py --input-file data/datasets/val.csv --output-file
       data/features/val.csv
     deps:
-      - data/datasets/val.csv
-      - src/compute_features.py
+    - data/datasets/val.csv
+    - src/compute_features.py
     outs:
-      - data/features/val.csv
+    - data/features/val.csv
   compute-test-features:
-    cmd:
-      python src/compute_features.py --input-file data/raw/test.csv --output-file
+    cmd: python src/compute_features.py --input-file data/raw/test.csv --output-file
       data/features/test.csv
     deps:
-      - data/raw/test.csv
-      - src/compute_features.py
+    - data/raw/test.csv
+    - src/compute_features.py
     outs:
-      - data/features/test.csv
+    - data/features/test.csv
   train:
-    cmd:
-      python src/train_model.py --training-data data/features/train.csv --model-path
+    cmd: python src/train_model.py --training-data data/features/train.csv --model-path
       models/hgb_classifier
     deps:
-      - data/features/train.csv
-      - src/train_model.py
+    - data/features/train.csv
+    - src/train_model.py
     outs:
-      - models/hgb_classifier
-      - models/hgb_classifier.mlem:
-          cache: false
-      - models/hgb_classifier_lambda
-      - models/hgb_classifier_lambda.mlem:
-          cache: false
-
+    - models/hgb_classifier
+    - models/hgb_classifier.mlem:
+        cache: false
+    - models/hgb_classifier_lambda
+    - models/hgb_classifier_lambda.mlem:
+        cache: false
   evaluate:
-    cmd:
-      mkdir -p metrics; python src/evaluate_model.py --test-data data/features/val.csv
+    cmd: mkdir -p metrics; python src/evaluate_model.py --test-data data/features/val.csv
       --model-path models/hgb_classifier > metrics/test.json
     deps:
-      - data/features/val.csv
-      - models/hgb_classifier
-      - src/evaluate_model.py
+    - data/features/val.csv
+    - models/hgb_classifier
+    - src/evaluate_model.py
     metrics:
-      - metrics/test.json:
-          cache: false
-  create_submission:
-    cmd: mlem apply models/hgb_classifier_lambda data/features/test.csv --method __call__ --import --it "pandas[csv]" --output data/predictions/submission.csv
+    - metrics/test.json:
+        cache: false
+  create-submission:
+    cmd: mlem apply models/hgb_classifier_lambda data/features/test.csv --method __call__
+      --import --it "pandas[csv]" --output data/predictions/submission.csv
     deps:
-      - models/hgb_classifier_lambda
-      - data/features/test.csv
+    - models/hgb_classifier_lambda
+    - data/features/test.csv
     outs:
-      - data/predictions/submission.csv
-      - data/predictions/submission.csv.mlem:
-          cache: false
+    - data/predictions/submission.csv
+    - data/predictions/submission.csv.mlem:
+        cache: false
+  submit-to-kaggle:
+    cmd: kaggle competitions submit -c spaceship-titanic -f data/predictions/submission.csv
+      -m "$(git rev-parse --short HEAD)"
+    deps:
+    - data/predictions/submission.csv
+    frozen: true
   render-EDA:
-    cmd:
-      jupyter nbconvert --to html --execute notebooks/1.0-eda.ipynb --output-dir
+    cmd: jupyter nbconvert --to html --execute notebooks/1.0-eda.ipynb --output-dir
       reports/
     deps:
-      - data/raw/train.csv
-      - notebooks/1.0-eda.ipynb
+    - data/raw/train.csv
+    - notebooks/1.0-eda.ipynb
     outs:
-      - reports/1.0-eda.html
+    - reports/1.0-eda.html
