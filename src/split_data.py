@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import click
+from dvc.api import params_show
 import pandas as pd
 from sklearn.model_selection import GroupShuffleSplit
 
@@ -13,13 +14,16 @@ from sklearn.model_selection import GroupShuffleSplit
 )
 @click.option("--output-dir", type=click.Path(path_type=Path), default="data/datasets/")
 def main(input_data: Path, output_dir: Path):
+    params = params_show(stages="split-data")["split-data"]
     output_dir.mkdir(parents=True, exist_ok=True)
     df = pd.read_csv(input_data)
     groups = df["PassengerId"].str.split("_", expand=True)[0]
     idx_train, idx_val = next(
-        GroupShuffleSplit(n_splits=1, random_state=13, test_size=0.25).split(
-            df, groups=groups
-        )
+        GroupShuffleSplit(
+            n_splits=1,
+            random_state=params["random_state"],
+            test_size=params["val_size"],
+        ).split(df, groups=groups)
     )
     df_train = df.iloc[idx_train]
     df_val = df.iloc[idx_val]
