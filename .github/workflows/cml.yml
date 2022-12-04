@@ -24,6 +24,7 @@ jobs:
         run: |
           echo "# CML report" >> report.md
           git fetch --depth=1 origin main:main
+          dvc params diff main --md >> report.md
           dvc metrics diff main --show-md >> report.md
           dvc plots show data/predictions/val.csv --template confusion -x actual -y prediction --show-vega > ./confusion.vega
           vl2png confusion.vega > confusion.png

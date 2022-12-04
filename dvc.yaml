@@ -11,6 +11,8 @@ stages:
     frozen: true
   split-data:
     cmd: python src/split_data.py
+    params:
+      - split-data
     deps:
       - data/raw/train.csv
       - src/split_data.py
@@ -48,6 +50,8 @@ stages:
     cmd:
       python src/train_model.py --training-data data/features/train.csv --model-path
       models/hgb_classifier
+    params:
+      - train
     deps:
       - data/features/train.csv
       - src/train_model.py

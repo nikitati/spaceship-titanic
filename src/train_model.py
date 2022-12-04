@@ -3,6 +3,7 @@ from pathlib import Path
 import click
 import pandas as pd
 import numpy as np
+from dvc.api import params_show
 from mlem.api import save
 from functools import partial, update_wrapper
 from sklearn.pipeline import make_pipeline
@@ -42,6 +43,7 @@ FEATURE_NAMES, IS_CAT_FEATURE = zip(*ALL_FEATURES)
 
 
 def create_model():
+    model_params = params_show(stages="train")["train"]
     ordinal_feature_names, _ = zip(*ORDINAL_FEATURES)
     remainder_features = [fn for fn in FEATURE_NAMES if fn not in ordinal_feature_names]
     column_transformer = make_column_transformer(
@@ -56,9 +58,8 @@ def create_model():
         remainder="drop",
     )
     hgbc = HistGradientBoostingClassifier(
-        l2_regularization=0.1,
         categorical_features=list(IS_CAT_FEATURE),
-        random_state=13,
+        **model_params,
     )
     classifier = make_pipeline(
         column_transformer,
