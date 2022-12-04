@@ -24,35 +24,35 @@ stages:
       md5: 384dce5c4b08532745e343cca6c5c851
       size: 605020
     - path: src/compute_features.py
-      md5: a6478b2bbad368467d82374936a53f9f
-      size: 1377
+      md5: 0f820f2fedeae1cfb4957811f99e0842
+      size: 1375
     outs:
     - path: data/features/train.csv
-      md5: e7c76568d8d1592d8c25ea00bab06304
-      size: 785154
+      md5: 30e453fb76fea5564559c0e90373be32
+      size: 820723
   train:
     cmd: python src/train_model.py --training-data data/features/train.csv --model-path
       models/hgb_classifier
     deps:
     - path: data/features/train.csv
-      md5: e7c76568d8d1592d8c25ea00bab06304
-      size: 785154
+      md5: 30e453fb76fea5564559c0e90373be32
+      size: 820723
     - path: src/train_model.py
-      md5: 0f43b6a1e67f70230f6567671f9aff0d
-      size: 2855
+      md5: f7b5b1cd3ae49e335d7cc8e372ed0e79
+      size: 2853
     outs:
     - path: models/hgb_classifier
-      md5: f87798ec6edfb9dea47c285a2a7bc420
-      size: 369024
+      md5: b3265e0228630b5e1f42a02e997c3cdb
+      size: 367669
     - path: models/hgb_classifier.mlem
-      md5: 10a00bd9cc7fb98daa205200f240b876
-      size: 2194
+      md5: 645a6e11e6bd714a7dcf8636fadf8af8
+      size: 2278
     - path: models/hgb_classifier_lambda
-      md5: 6c20682c2607d683c509ff63e5b97be3
-      size: 371219
+      md5: 1c395b3d8479bd131deaafb83be68fc0
+      size: 369869
     - path: models/hgb_classifier_lambda.mlem
-      md5: 9e6ab617263127b00e22cc75331f4ce4
-      size: 2883
+      md5: 4c331f9642026c1d6fe13c59311e95ec
+      size: 2921
   compute-val-features:
     cmd: python src/compute_features.py --input-file data/datasets/val.csv --output-file
       data/features/val.csv
@@ -61,32 +61,32 @@ stages:
       md5: 22326675599eb80cd0f6c3f58194d946
       size: 200523
     - path: src/compute_features.py
-      md5: a6478b2bbad368467d82374936a53f9f
-      size: 1377
+      md5: 0f820f2fedeae1cfb4957811f99e0842
+      size: 1375
     outs:
     - path: data/features/val.csv
-      md5: cbc56e1bf89bcbd823ca368d5df20ca3
-      size: 260403
+      md5: 53478917ed989be00852627b269e5b38
+      size: 272213
   evaluate:
     cmd: mkdir -p metrics; python src/evaluate_model.py --test-data data/features/val.csv
       --model-path models/hgb_classifier > metrics/test.json
     deps:
     - path: data/features/val.csv
-      md5: cbc56e1bf89bcbd823ca368d5df20ca3
-      size: 260403
+      md5: 53478917ed989be00852627b269e5b38
+      size: 272213
     - path: models/hgb_classifier
-      md5: f87798ec6edfb9dea47c285a2a7bc420
-      size: 369024
+      md5: b3265e0228630b5e1f42a02e997c3cdb
+      size: 367669
     - path: src/evaluate_model.py
       md5: dfbd87c5c100e7979c6060be9fb8997d
       size: 1215
     outs:
     - path: data/predictions/val.csv
-      md5: 7527c98039b3dcdf1b90a1ddf646c70b
-      size: 50848
+      md5: 8ab41669607f1d61b658a1b9a3279bdd
+      size: 50834
     - path: metrics/test.json
-      md5: d60084d563a9f4b23a8b1621c843be4a
-      size: 171
+      md5: df89ee8585e8dccd9e14029694739776
+      size: 170
   render-EDA:
     cmd: jupyter nbconvert --to html --execute notebooks/1.0-eda.ipynb --output-dir
       reports/
@@ -109,12 +109,12 @@ stages:
       md5: 5ded803886f27a2f241763327b14a19e
       size: 372487
     - path: src/compute_features.py
-      md5: a6478b2bbad368467d82374936a53f9f
-      size: 1377
+      md5: 0f820f2fedeae1cfb4957811f99e0842
+      size: 1375
     outs:
     - path: data/features/test.csv
-      md5: 8c46ac0db01d09b1be0ece394e3127f5
-      size: 490518
+      md5: fdebcb1516ed0a5a4a281dd03edf010c
+      size: 513853
   create_submission:
     cmd: mlem apply models/hgb_classifier_lambda data/features/test.csv --method __call__
       --import --it "pandas[csv]" --output data/predictions/submission.csv
@@ -147,17 +147,17 @@ stages:
       --import --it "pandas[csv]" --output data/predictions/submission.csv
     deps:
     - path: data/features/test.csv
-      md5: 8c46ac0db01d09b1be0ece394e3127f5
-      size: 490518
+      md5: fdebcb1516ed0a5a4a281dd03edf010c
+      size: 513853
     - path: models/hgb_classifier_lambda
-      md5: 6c20682c2607d683c509ff63e5b97be3
-      size: 371219
+      md5: 1c395b3d8479bd131deaafb83be68fc0
+      size: 369869
     outs:
     - path: data/predictions/submission.csv
-      md5: 948e6e08cafddae7265534253a36e4aa
-      size: 57747
+      md5: f7127ae6b118355e89cfb5c9da708b6e
+      size: 57739
     - path: data/predictions/submission.csv.mlem
-      md5: be14d91cbe4023d08377efa9ae255ae7
+      md5: 21169c3bdabdfd838f75c2f334a37b97
       size: 356
   submit-to-kaggle:
     cmd: kaggle competitions submit -c spaceship-titanic -f data/predictions/submission.csv

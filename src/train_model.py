@@ -31,7 +31,7 @@ BINARY_FEATURES = [
     ("CryoSleep", False),
     ("VIP", False),
     ("NoBill", False),
-    # ("SoloTraveler", False),
+    ("SoloTraveler", False),
 ]
 ALL_FEATURES = [
     *ORDINAL_FEATURES,

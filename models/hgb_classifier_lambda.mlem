@@ -1,7 +1,7 @@
 artifacts:
   data.pkl:
-    hash: 6c20682c2607d683c509ff63e5b97be3
-    size: 371219
+    hash: 1c395b3d8479bd131deaafb83be68fc0
+    size: 369869
     type: dvc
     uri: hgb_classifier_lambda
 model_type:
@@ -29,6 +29,7 @@ model_type:
           - CryoSleep
           - VIP
           - NoBill
+          - SoloTraveler
           dtypes:
           - object
           - object
@@ -45,6 +46,7 @@ model_type:
           - float64
           - object
           - object
+          - bool
           - bool
           index_cols: []
           type: dataframe
@@ -63,14 +65,14 @@ object_type: model
 requirements:
 - module: pandas
   version: 1.5.2
-- module: click
-  version: 8.1.3
 - module: numpy
   version: 1.23.5
 - module: sklearn
   version: 1.1.3
+- module: click
+  version: 8.1.3
 - is_package: false
   module: __main__
   name: __main__
-  source64zip: eJyNVttu2zgQfddXEOqLnFWMZvctgIA6TrIN0KSB7RZZBAZBS5RNmCIJkkrqLvbfd0hRti7eYo0AEWc4Zw5nDi+llhVSxO442yBWKakteoZhFIVBzlm+bweKiIIYBH+qaG2irtTBmYSKSodWcVpNiWItnCFvtPGUtcitlNygI562jPAU1aogluJ3TZSiuplt9pwSLaaKKcqZoG1QRfYUt8b+1FzCFNOfmUteVwJbTYQppa6G8FQYWm34MegzM/ZPTQpGhb2R0lgmtnNOjGElG1HTVGmZU3CKbQvwVRdMEH4ncllAQPQBJSUlttYUCVLRFDGDc1jtVmqWEw7MKMVGcWYn0dfF7cPT7Au+v5utvi3ulihDrxGCXxJ/lhV95kRQG6dopWs6SYPnljqSxDIphq452TBxS/M9OO4JNwPPkhX0FLKOnr493i0e5ucJLKSsllS/sZyO0O6lLOay1nbkWe6kUlCdR8L52KnIyPZ9cZbvSlqo6Q/l2mXOr+aprkaO2bZLdh3dQHkXf51b3lwf5JJTqsaMHp5Htid5w0YL+uCWJLlcaZA8p7qXefblTFUvhg1vgC7GjQiOAX8HHL7x0+wRDOhhieezVTsDMv1kKrnoZp9EUVTQEuWauk1XgUx5Mrn2CWQjXhwUi51iTYpwizPkO/FRmlaECVB7G2fcCkuBYMMh+McE6rFErHRmIa1znc259sDjzQvA/7GtEx/h23P8cr/+fkx2cIZximuxF/JdZHFtKKbeV+A3wmunl+BsxplQU0FE6HH7O1+o45TO7D6bWMFRYnda1ttd3IccV/Es3nFaFhdaqgDSNGK33eRQoV+fYSdC/Hes6bbmRLOf/vzIPk6vTpm6p1RLKeOAnfRF1iUH1ZUVNhZCs6s/utzyI4G2h+0hfiI07uoJ2q2ti6cpEBId2CBrCGYiqLooMROqttdwYU1viSX3GvoUtN4j1N8M3v8C5hbAGw4dw2u8ciTdiU+LeD0AnJbMJi8pOvyaakhq6k3FwCNF4vOn6CVQDIFd8qdi/d0X1jOAU7Gl+qGIr9HLa8+w7kutR/4a+azuNitYDrw7/fwnFDyKPvmXgLtiK+gxlCgYpHLCaVjFl5e++iC3S7jQSdCmPSiaNbPd2yKhP0BDJnPXTopKBrtR7skhjAumm6E/OlP/OMEewcUCtWFmSOr5X7qZsHmH2QYAE195t4WSlit2XK/9uydtaoFdUGMJnTiZp/BqgX01rfZANWkG7WL8yoC+Hza9B8H4PKAdaCM0vMC5eevnnpxSwLSBgP2wmWFIpaBaLqSRove99ludooveYbteT3eQNRHZ1ccW5q0jo0Zy/aFf6MnWyZt1vru7sY/Zf88l4Z2XjPQeyj1Jx1thco7S9J1BM91Zm3SMbox+QzHmpNoUJJ78b+bwzC0R9oAY7rgMMLCTBsZxaLvTyST6F9mZciQ=
+  source64zip: eJyNVttu2zgQfddXENoXOVWMZvctgIB1nGQboEkD2y2yCAyCliibMEUSJJXULfbfd0hRti7eYo0AEWc4Zw5nDi+llhVSxO442yBWKakteoZhFIVBzlm+bweKiIIYBH+qaG2irtTBmYSKSodWcVpNiWItnCFvtPGUtcitlNygI562jPAU1aogluJ3TZSiuplt9pwSLaaKKcqZoG1QRfYUt8b+1FzCFNOfmUteVwJbTYQppa6G8FQYWm34MegTM/YvTQpGhb2R0lgmtnNOjGElG1HTVGmZU3CKbQvwRRdMEH4ncllAQPQbSkpKbK0pEqSiKWIG57DardQsJxyYUYqN4sxOoi+L24en2Wd8fzdbfV3cLVGGXiMEvyT+JCv6zImgNk7RStd0kgbPLXUkiWVSDF1zsmHiluZ7cNwTbgaeJSvoKWQdPX19vFs8zM8TWEhZLal+Yzkdod1LWcxlre3Is9xJpaA6j4TzsVORke3b4izflbRQ0+/KtcucX81TXY0cs22X7Dq6gfIu/j63vLk+yCWnVI0ZPTyPbE/yhp1bkORypUHwnOpe3tnnMzW9GLa7gbkYtyE4BuwdcPjGT7NHMKCHJZ7PVu0MyPSDqeSim30SRVFBS5Rr6rZcBSLlyeTaJ5CNdHHQK3Z6NSnCLc6Q78RHaVoRJkDrbZxxKywFgu2G4B8TqMcSsdKZhbTOdTbn2gOPty4A/8emTnyE78Lxy/36uzHZwQnGKa7FXsh3kcW1oZh6X4HfCK+dWoKzGWdCTQURocPt73yhjlM6s/tsYgUHid1pWW93cR9yXMWzeMdpWVxoqQJI04jddpNDhX59gp0I8d+xptuaE81++NMj+zi9OmXqnlEtpYwDdtIXWZccVFdW2FgIza7+6HLLjwTaHrZH+InQuKsnaLe2Lp6mQEh0YIOsIZiJoOqixEyo2l7DdTW9JZbca+hT0HqPUH8zeP8LmFsAbzh0DK/xypF05z0t4vUAcFoym7yk6PBrqiGpqTcVA48Uic+fopdAMQR2yZ+K9bMvrGcAp2JL9UMRX6OX155h3Zdaj/w18lndXVawHHh3+vlPKHgU/enfAe6CraDHUKJgkMoJp2EVX1766oPcLuE6J0Gb9qBo1sx2L4uEfgcNmcxdOikqGexGuSeHMC6Ybob+6Ez90wR7BBcL1IaZIannf+lmwuYdZhsATHzl3RZKWq7Ycb32r560qQV2QY0ldOJknsKbBfbVtNoD1aQZtIvxKwP6ftj0HgTj84B2oI3Q8ALn5q2fe3JKAdMGAvbDZoYhlYJquZBGit732m91ii56h+16Pd1B1kRkVx9bmLeOjBrJ9Yd+oSdbJ2/W+e7uxj5m/zWXhFdeMtJ7KPckHW+FyTlK03cGzXRnbdIxujH6gGLMSbUpSDz538zhkVsi7AEx3HEZYGAnDYzj0Hank0n0L7OFceE=
   type: custom
