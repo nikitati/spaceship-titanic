@@ -28,4 +28,4 @@ jobs:
           dvc plots show data/predictions/val.csv --template confusion -x actual -y prediction --show-vega > ./confusion.vega
           vl2png confusion.vega > confusion.png
           echo '![](./confusion.png "Confusion Matrix")' >> report.md
-          cml comment update pr report.md
+          cml comment update --pr report.md
