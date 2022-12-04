@@ -1,0 +1,24 @@
+name: Kaggle
+on:
+  push:
+    branches:
+      - main
+jobs:
+  submit-predictions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: iterative/setup-dvc@v1
+      - name: Create a submission
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        run: |
+          pip install -r requirements.txt
+          dvc pull
+          dvc unfreeze submit-to-kaggle
+          dvc repro submit-to-kaggle
