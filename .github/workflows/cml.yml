@@ -1,13 +1,14 @@
 name: CML
-on: [pull_request]
+on: [push]
 jobs:
   train-and-report:
     runs-on: ubuntu-latest
-    container: docker://ghcr.io/iterative/cml:0-dvc2-base1
     steps:
+      - uses: iterative/setup-cml@v1
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+      - uses: iterative/setup-dvc@v1
       - name: Evaluate model
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
