@@ -27,7 +27,7 @@ def compute_features(df: pd.DataFrame):
     df = pd.merge(
         df, group_size, how="left", left_on="PassengerGroup", right_index=True
     )
-    # df["SoloTraveler"] = df["GroupSize"] == 1
+    df["SoloTraveler"] = df["GroupSize"] == 1
     return df
 
 

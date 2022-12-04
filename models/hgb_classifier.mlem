@@ -1,7 +1,7 @@
 artifacts:
   data:
-    hash: f87798ec6edfb9dea47c285a2a7bc420
-    size: 369024
+    hash: b3265e0228630b5e1f42a02e997c3cdb
+    size: 367669
     type: dvc
     uri: hgb_classifier
 model_type:
@@ -27,6 +27,7 @@ model_type:
           - CryoSleep
           - VIP
           - NoBill
+          - SoloTraveler
           dtypes:
           - object
           - object
@@ -43,6 +44,7 @@ model_type:
           - float64
           - object
           - object
+          - bool
           - bool
           index_cols: []
           type: dataframe
@@ -74,6 +76,7 @@ model_type:
           - CryoSleep
           - VIP
           - NoBill
+          - SoloTraveler
           dtypes:
           - object
           - object
@@ -90,6 +93,7 @@ model_type:
           - float64
           - object
           - object
+          - bool
           - bool
           index_cols: []
           type: dataframe
