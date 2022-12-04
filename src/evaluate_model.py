@@ -14,9 +14,14 @@ from sklearn.metrics import (
 from mlem.api import load
 
 
-def evaluate(X, y_true, classifier):
+def evaluate(X, y_true, classifier, pred_path):
     y_pred_ps = classifier.predict_proba(X)[:, 1]
     y_pred = y_pred_ps >= 0.5
+    pd.DataFrame({
+        "PassengerId": X["PassengerId"],
+        "actual": y_true,
+        "prediction": y_pred,
+    }).to_csv(pred_path)
     return {
         "accuracy": accuracy_score(y_true, y_pred),
         "roc_auc": roc_auc_score(y_true, y_pred_ps),
@@ -32,7 +37,7 @@ def evaluate(X, y_true, classifier):
 def main(test_data: Path, model_path: Path):
     df = pd.read_csv(test_data)
     classifier = load(model_path)
-    metrics = evaluate(df, df["Transported"], classifier)
+    metrics = evaluate(df, df["Transported"], classifier, Path("data/predictions") / test_data.name)
     print(json.dumps(metrics, indent=2))
 
 

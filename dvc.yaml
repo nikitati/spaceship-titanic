@@ -66,6 +66,8 @@ stages:
       - data/features/val.csv
       - models/hgb_classifier
       - src/evaluate_model.py
+    outs:
+      - data/predictions/val.csv
     metrics:
       - metrics/test.json:
           cache: false
