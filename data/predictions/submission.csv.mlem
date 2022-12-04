@@ -1,7 +1,7 @@
 artifacts:
   data:
-    hash: f7127ae6b118355e89cfb5c9da708b6e
-    size: 57739
+    hash: 7910d9467b12837b0bb418e1dd4ac3f3
+    size: 57699
     type: dvc
     uri: submission.csv
 object_type: data

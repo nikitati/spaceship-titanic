@@ -50,22 +50,22 @@ stages:
         train:
           random_state: 13
           l2_regularization: 0.1
-          learning_rate: 0.1
-          max_iter: 100
-          max_depth:
+          learning_rate: 0.01
+          max_iter: 1000
+          max_depth: 5
     outs:
     - path: models/hgb_classifier
-      md5: b3265e0228630b5e1f42a02e997c3cdb
-      size: 367669
+      md5: 3c63fa00b60a8dfc8d8ca3622410ec17
+      size: 2312572
     - path: models/hgb_classifier.mlem
-      md5: 645a6e11e6bd714a7dcf8636fadf8af8
-      size: 2278
+      md5: 3229a7441d79582b808d2f12d048057e
+      size: 2279
     - path: models/hgb_classifier_lambda
-      md5: b9b3cca55681d44d3d085cfc000cf5be
-      size: 369869
+      md5: 24b0cae74951ef3899d6bcdf6f51af90
+      size: 2328281
     - path: models/hgb_classifier_lambda.mlem
-      md5: 8c22125377626f6b209827e29840a905
-      size: 2965
+      md5: e8a43adfa02bbb3aaad4a164a5380fb2
+      size: 2966
   compute-val-features:
     cmd: python src/compute_features.py --input-file data/datasets/val.csv --output-file
       data/features/val.csv
@@ -88,17 +88,17 @@ stages:
       md5: 53478917ed989be00852627b269e5b38
       size: 272213
     - path: models/hgb_classifier
-      md5: b3265e0228630b5e1f42a02e997c3cdb
-      size: 367669
+      md5: 3c63fa00b60a8dfc8d8ca3622410ec17
+      size: 2312572
     - path: src/evaluate_model.py
       md5: dfbd87c5c100e7979c6060be9fb8997d
       size: 1215
     outs:
     - path: data/predictions/val.csv
-      md5: 8ab41669607f1d61b658a1b9a3279bdd
-      size: 50834
+      md5: 77f155aacfb8abeece7701aa8adc616d
+      size: 50844
     - path: metrics/test.json
-      md5: df89ee8585e8dccd9e14029694739776
+      md5: 465b96554c06a54e3c3aaf351405618d
       size: 170
   render-EDA:
     cmd: jupyter nbconvert --to html --execute notebooks/1.0-eda.ipynb --output-dir
@@ -163,14 +163,14 @@ stages:
       md5: fdebcb1516ed0a5a4a281dd03edf010c
       size: 513853
     - path: models/hgb_classifier_lambda
-      md5: b9b3cca55681d44d3d085cfc000cf5be
-      size: 369869
+      md5: 24b0cae74951ef3899d6bcdf6f51af90
+      size: 2328281
     outs:
     - path: data/predictions/submission.csv
-      md5: f7127ae6b118355e89cfb5c9da708b6e
-      size: 57739
+      md5: 7910d9467b12837b0bb418e1dd4ac3f3
+      size: 57699
     - path: data/predictions/submission.csv.mlem
-      md5: 21169c3bdabdfd838f75c2f334a37b97
+      md5: c0aa16ca888c49cc37274a3ca7051bf3
       size: 356
   submit-to-kaggle:
     cmd: kaggle competitions submit -c spaceship-titanic -f data/predictions/submission.csv
