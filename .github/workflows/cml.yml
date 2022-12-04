@@ -17,6 +17,7 @@ jobs:
           pip install -r requirements.txt
           dvc pull data
       - name: Create report
+        run: |
           echo "# CML report" >> report.md
           git fetch --depth=1 origin main:main
           dvc metrics diff --show-md main >> report.md
